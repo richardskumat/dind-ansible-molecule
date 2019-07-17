@@ -1,0 +1,18 @@
+---
+services: docker
+
+env:
+  global:
+    - DOCKER_USER: qwe1
+    - DOCKER_IMAGE: dind-ansible-molecule
+  #matrix:
+  #  - whatever
+
+before_script:
+  - docker info
+
+script:
+  # Run tests.
+  - docker build -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE .
+  - docker images
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE cat /etc/os-release
