@@ -36,7 +36,7 @@
      - docker-builder
    script:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-     - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
+     - docker build -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
 
  push:
   stage: push
@@ -45,7 +45,7 @@
   only:
     - master
   script:
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest .
+    - docker build -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA -t $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest .
     - docker images
     - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker push $CI_REGISTRY_USER/$CI_REGISTRY_IMAGE:latest
