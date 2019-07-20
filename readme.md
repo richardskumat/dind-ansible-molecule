@@ -6,9 +6,9 @@ The image has:
 
 - docker, ansible and molecule installed
 
-- upsteam image of docker:stable is based on alpine linux
+- upstream image of docker:stable, which is based on alpine linux
 
-I use this image to test molecule converge and test runs.
+I use this image to test molecule converge and test my ansible roles.
 
 The image should be rebuilt daily.
 
