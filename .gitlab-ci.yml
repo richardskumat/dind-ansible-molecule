@@ -8,18 +8,20 @@
    - docker:dind
 
  stages:
-   #- build
+   - build
    - push
 
  before_script:
+   # add CI_REGISTRY_DOMAIN below seems to cause login issues with dockerhub (permission denied)
+   # denied: requested access to the resource is denied
    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD # $CI_REGISTRY_DOMAIN
    - docker info
 
- #build:
- #  stage: build
- #  script:
- #   # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
- #    - docker build -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:latest -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:$CI_COMMIT_SHA .
+ build:
+   stage: build
+   script:
+    # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
+     - docker build -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:latest -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:$CI_COMMIT_SHA .
 
  push:
   stage: push
