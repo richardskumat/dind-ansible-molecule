@@ -1,34 +1,37 @@
- image: docker:stable
+image: docker:stable
 
- variables:
-   DOCKER_HOST: tcp://docker:2375/
-   DOCKER_DRIVER: overlay2
+variables:
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
+  # https://gitlab.com/gitlab-org/gitlab-ce/issues/64959
+  # 19.03 had some breaking changes compared to 18.09
+  DOCKER_TLS_CERTDIR: ""
 
- services:
-   - docker:dind
+services:
+  - docker:dind
 
- stages:
-   - build
-   - push
+stages:
+  - build
+  - push
 
- before_script:
-   # add CI_REGISTRY_DOMAIN below seems to cause login issues with dockerhub (permission denied)
-   # denied: requested access to the resource is denied
-   - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD # $CI_REGISTRY_DOMAIN
-   - docker info
+before_script:
+  # add CI_REGISTRY_DOMAIN below seems to cause login issues with dockerhub (permission denied)
+  # denied: requested access to the resource is denied
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD # $CI_REGISTRY_DOMAIN
+  - docker info
 
- build:
-   stage: build
-   script:
-    # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-     - docker build -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:latest -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:$CI_COMMIT_SHA .
-
- push:
-  stage: push
-  only:
-    - master
+build:
+  stage: build
   script:
+   # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     - docker build -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:latest -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:$CI_COMMIT_SHA .
-    - docker images
-    - docker push $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:latest
-    - docker push $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:$CI_COMMIT_SHA
+
+push:
+ stage: push
+ only:
+   - master
+ script:
+   - docker build -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:latest -t $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:$CI_COMMIT_SHA .
+   - docker images
+   - docker push $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:latest
+   - docker push $CI_REGISTRY_DOMAIN/$CI_REGISTRY_USER/$CI_REGISTRY_PROJECT:$CI_COMMIT_SHA
