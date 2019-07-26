@@ -1,5 +1,5 @@
 FROM docker:stable
-ENV ansible_version=2.8.2
+ENV ansible_version=2.8.3
 RUN apk update && \
     apk upgrade && \
     apk add python3 musl-dev py3-pip gcc python3-dev libffi-dev openssl-dev
