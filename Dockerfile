@@ -1,10 +1,8 @@
-FROM qwe1/debdocker
+FROM docker:stable
 ENV ansible_version=2.8.3
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y --no-install-recommends python3 libc6-dev python3-pip gcc python3-dev python3-setuptools libssl-dev openssh-client
-RUN pip3 install ansible==${ansible_version} molecule
-# docker-py python-vagrant pywinrm
-RUN apt-get purge --autoremove -y libc6-dev python3-pip gcc python3-dev python3-setuptools libssl-dev && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk update && \
+    apk upgrade && \
+    apk add python3 musl-dev py3-pip gcc python3-dev libffi-dev openssl-dev openssh-client
+RUN pip3 install ansible==${ansible_version} molecule docker-py python-vagrant pywinrm
+RUN apk del musl-dev gcc python3-dev libffi-dev openssl-dev && \
+    rm -rf /var/cache/apk/*
