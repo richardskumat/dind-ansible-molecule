@@ -15,6 +15,7 @@ script:
   # Run tests.
   - docker build -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE .
   - docker images
-  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE cat /etc/os-release
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE ansible --version
+  - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE molecule --version
   - docker run $DOCKER_USER/$DOCKER_IMAGE:latest ansible --version
   - docker run $DOCKER_USER/$DOCKER_IMAGE:latest molecule --version
