@@ -1,11 +1,13 @@
 image: docker:stable
 
 variables:
-  DOCKER_HOST: tcp://docker:2375/
+  # https://about.gitlab.com/blog/2019/07/31/docker-in-docker-with-docker-19-dot-03/
   DOCKER_DRIVER: overlay2
-  # https://gitlab.com/gitlab-org/gitlab-ce/issues/64959
-  # 19.03 had some breaking changes compared to 18.09
-  DOCKER_TLS_CERTDIR: ""
+  # Create the certificates inside this directory for both the server
+  # and client. The certificates used by the client will be created in
+  # /certs/client so we only need to share this directory with the
+  # volume mount in `config.toml`.
+  DOCKER_TLS_CERTDIR: "/certs"
 
 services:
   - docker:dind

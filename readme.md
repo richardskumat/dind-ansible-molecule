@@ -1,26 +1,35 @@
 # dind-ansible-molecule
 
-Based on docker:stable.
+
+
+[![pipeline status](https://gitlab.com/richardskumat/dind-ansible-molecule/badges/master/pipeline.svg)](https://gitlab.com/richardskumat/dind-ansible-molecule/commits/master)
+
+Based on qwe1/debdocker, because:
+
+- I decided to build this image because I've had some python issues due to upstream
+docker:stable being an Alpine image while doing molecule tests
+on my Ansible roles.
 
 The image has:
 
 - docker, ansible and molecule installed
-
-- upstream image of docker:stable, which is based on alpine linux
+- debian:10 container base
 
 I use this image to test molecule converge and test my ansible roles.
 
-The image should be rebuilt daily.
-
-# Links
-
-Github
-
-https://github.com/richardskumat/dind-ansible-molecule
+## Links to source code and build logs
 
 Gitlab
 
 https://gitlab.com/richardskumat/dind-ansible-molecule
+
+Gitlab pipelines
+
+https://gitlab.com/richardskumat/dind-ansible-molecule/pipelines
+
+Github
+
+https://github.com/richardskumat/dind-ansible-molecule
 
 Travis
 
