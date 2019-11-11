@@ -5,6 +5,9 @@ env:
   global:
     - DOCKER_USER: qwe1
     - DOCKER_IMAGE: dind-ansible-molecule
+    - GITLAB_REG_URL: registry.gitlab.com
+    - GITLAB_REG_USER: richardskumat
+    - GITLAB_REG_IMAGE: dind-ansible-molecule
   #matrix:
   #  - whatever
 
@@ -19,3 +22,5 @@ script:
   - docker run $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE molecule --version
   - docker run $DOCKER_USER/$DOCKER_IMAGE:latest ansible --version
   - docker run $DOCKER_USER/$DOCKER_IMAGE:latest molecule --version
+  - docker run --rm $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:latest ansible --version
+  - docker run --rm $GITLAB_REG_URL/$GITLAB_REG_USER/$GITLAB_REG_IMAGE:latest molecule --version
