@@ -1,7 +1,5 @@
 # dind-ansible-molecule
 
-
-
 [![pipeline status](https://gitlab.com/richardskumat/dind-ansible-molecule/badges/master/pipeline.svg)](https://gitlab.com/richardskumat/dind-ansible-molecule/commits/master)
 
 Based on qwe1/debdocker, because:
