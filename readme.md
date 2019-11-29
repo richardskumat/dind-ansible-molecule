@@ -15,6 +15,18 @@ The image has:
 
 I use this image to test molecule converge and test my ansible roles.
 
+Interactive usage, if we are in an Ansible role directory:
+
+```bash
+docker run -w /tmp/$(pwd | awk -F'/' '{print $NF}') -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/tmp/$(pwd | awk -F'/' '{print $NF}') --rm -ti qwe1/dind-ansible-molecule bash
+```
+
+Example molecule test, if we are in an Ansible role root directory:
+
+```bash
+docker run -w /tmp/$(pwd | awk -F'/' '{print $NF}') -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/tmp/$(pwd | awk -F'/' '{print $NF}') --rm -ti qwe1/dind-ansible-molecule molecule test
+```
+
 ## Links to source code and build logs
 
 Gitlab
