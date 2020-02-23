@@ -10,6 +10,7 @@ services:
 stages:
   - build
   - push
+  - test
 
 before_script:
   - docker info
@@ -37,3 +38,11 @@ push_to_dockerhub:
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$CI_COMMIT_SHA
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION
+
+test_docker_images:
+ stage: test
+ only:
+   - master
+ script:
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION molecule --version
