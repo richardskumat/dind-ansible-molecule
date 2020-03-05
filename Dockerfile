@@ -1,6 +1,6 @@
 FROM qwe1/debdocker
 # https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
-ENV ansible_version=2.9.5
+ENV ansible_version=2.9.6
 ENV molecule_version=3.0
 ENV umask=022
 RUN apt-get update && \
