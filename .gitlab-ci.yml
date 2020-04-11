@@ -21,12 +21,12 @@ build:
   script:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
     # build the latest image
-    - docker build -t $CI_COMMIT_SHORT_SHA:latest .
+    - docker build -f Dockerfile -t $CI_COMMIT_SHORT_SHA:latest .
     - docker images
     - docker run --rm $CI_COMMIT_SHORT_SHA:latest ansible --version
     - docker run --rm $CI_COMMIT_SHORT_SHA:latest molecule --version
     # build image with root user
-    - docker build -t $CI_COMMIT_SHORT_SHA:root .
+    - docker build -f Dockerfile-root -t $CI_COMMIT_SHORT_SHA:root .
     - docker images
     - docker run --rm $CI_COMMIT_SHORT_SHA:root ansible --version
     - docker run --rm $CI_COMMIT_SHORT_SHA:root molecule --version
@@ -38,8 +38,8 @@ push_to_dockerhub:
    - master
  script:
    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
-   - docker build -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$CI_COMMIT_SHA -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION .
-   - docker build -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION-root .
+   - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$CI_COMMIT_SHA -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION .
+   - docker build -f Dockerfile-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION-root .
    - docker images
    # test latest image before push
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
