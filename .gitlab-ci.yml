@@ -20,10 +20,17 @@ build:
   stage: build
   script:
     # https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
-    - docker build -t $CI_COMMIT_SHORT_SHA:$CI_COMMIT_SHA -t $CI_COMMIT_SHORT_SHA:$ANSIBLE_VERSION .
+    # build the latest image
+    - docker build -t $CI_COMMIT_SHORT_SHA:latest .
     - docker images
-    - docker run --rm $CI_COMMIT_SHORT_SHA:$CI_COMMIT_SHA ansible --version
-    - docker run --rm $CI_COMMIT_SHORT_SHA:$CI_COMMIT_SHA molecule --version
+    - docker run --rm $CI_COMMIT_SHORT_SHA:latest ansible --version
+    - docker run --rm $CI_COMMIT_SHORT_SHA:latest molecule --version
+    # build image with root user
+    - docker build -t $CI_COMMIT_SHORT_SHA:root .
+    - docker images
+    - docker run --rm $CI_COMMIT_SHORT_SHA:root ansible --version
+    - docker run --rm $CI_COMMIT_SHORT_SHA:root molecule --version
+
 
 push_to_dockerhub:
  stage: push
@@ -32,12 +39,21 @@ push_to_dockerhub:
  script:
    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
    - docker build -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$CI_COMMIT_SHA -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION .
+   - docker build -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION-root .
    - docker images
+   # test latest image before push
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
+   # test root image before push
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root ansible --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root molecule --version
+   # push latest image
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$CI_COMMIT_SHA
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION
+   # push root image
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION-root
 
 test_docker_images:
  stage: test
