@@ -15,9 +15,19 @@ The image has:
 
 I use this image to test molecule converge and test my ansible roles.
 
+## Tags
+
 The latest/$ANSIBLE_VERSION tag runs as [uid 1000 and is part of the docker group(gid 998.)](https://gitlab.com/richardskumat/dind-ansible-molecule/-/blob/master/Dockerfile).
 
+The latest points at ansible 2.9.x.
+
 There's a root/$ANSIBLE_VERSION-root tag that simply runs as the root user.
+
+The root tag points at ansible 2.9.x.
+
+There also tags for ansible 2.7 and 2.8, with basic user and root variants.
+
+## Usage examples
 
 Interactive usage, if we are in an Ansible role directory:
 
