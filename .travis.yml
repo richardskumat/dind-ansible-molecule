@@ -18,12 +18,12 @@ script:
   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root ansible --version
   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root molecule --version
   # test 2.8
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_28 ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_28 molecule --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_28-root ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_28-root molecule --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8 ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8 molecule --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8-root ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8-root molecule --version
   # test 2.7
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27 ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27 molecule --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27-root ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27-root molecule --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 molecule --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root molecule --version
