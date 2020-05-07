@@ -17,5 +17,4 @@ RUN groupadd -g 998 docker
 RUN useradd -m -s /bin/bash user && \
     gpasswd -a user docker
 USER user
-=======
 CMD ["bash"]
