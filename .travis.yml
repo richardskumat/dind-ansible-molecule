@@ -12,18 +12,21 @@ before_script:
   - docker info
 
 script:
-  # test 2.9
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root molecule --version
-  # test 2.8
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8 ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8 molecule --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8-root ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8-root molecule --version
-  # test 2.7
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 molecule --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root ansible --version
-  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root molecule --version
+  # test build 2.9
+  - docker build -t 2.9 -f Dockerfile
+  - docker build -t 2.9-root -f Dockerfile-root
+  # test build 2.8
+  - docker build -t 2.8 -f Dockerfile-2.8
+  - docker build -t 2.8-root -f Dockerfile-2.8-root
+  # test build 2.7
+  - docker build -t 2.7 -f Dockerfile-2.7
+  - docker build -t 2.7-root -f Dockerfile-2.7-root
+  # run 2.9
+  - docker run --rm 2.9 ansible --version
+  - docker run --rm 2.9-root ansible --version
+  # run 2.8
+  - docker run --rm 2.8 ansible --version
+  - docker run --rm 2.8-root ansible --version
+  # run 2.7
+  - docker run --rm 2.7 ansible --version
+  - docker run --rm 2.7-root ansible --version
