@@ -23,7 +23,7 @@ build:
   script:
    # ans 2.9
    - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.9 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_29 .
-   - docker build -f Dockerfile-flake8 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.9 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_29 .
+   - docker build -f Dockerfile-flake8 -t flake8 .
    # summary
    - docker images
 
