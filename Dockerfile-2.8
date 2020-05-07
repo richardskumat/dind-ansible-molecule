@@ -11,7 +11,7 @@ RUN pip3 install ansible==${ansible_version} molecule==${molecule_version} docke
 RUN apt-get purge --autoremove -y libc6-dev gcc libssl-dev python3-dev python3-wheel && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache
-# note -g 998 might work on a debian host(as where I run it)
+# note -g 998 might work on a debian host(that's where I run it)
 # but might break on RHEL systems
 RUN groupadd -g 998 docker
 RUN useradd -m -s /bin/bash user && \
