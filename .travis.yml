@@ -3,8 +3,8 @@ services: docker
 
 env:
   global:
-    - DOCKER_USER: qwe1
-    - DOCKER_IMAGE: dind-ansible-molecule
+    - DOCKERHUB_USER: qwe1
+    - DOCKERHUB_PROJECT: dind-ansible-molecule
   #matrix:
   #  - whatever
 
@@ -12,10 +12,18 @@ before_script:
   - docker info
 
 script:
-  # Run tests.
-  - docker build -t $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE .
-  - docker images
-  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE ansible --version
-  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:travis-$DOCKER_IMAGE molecule --version
-  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:latest ansible --version
-  - docker run --rm $DOCKER_USER/$DOCKER_IMAGE:latest molecule --version
+  # test 2.9
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root molecule --version
+  # test 2.8
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8 ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8 molecule --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8-root ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.8-root molecule --version
+  # test 2.7
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 molecule --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root ansible --version
+  - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root molecule --version
