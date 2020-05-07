@@ -13,14 +13,14 @@ before_script:
 
 script:
   # test build 2.9
-  - docker build -t 2.9 -f Dockerfile
-  - docker build -t 2.9-root -f Dockerfile-root
+  - docker build -t 2.9 -f Dockerfile .
+  - docker build -t 2.9-root -f Dockerfile-root .
   # test build 2.8
-  - docker build -t 2.8 -f Dockerfile-2.8
-  - docker build -t 2.8-root -f Dockerfile-2.8-root
+  - docker build -t 2.8 -f Dockerfile-2.8 .
+  - docker build -t 2.8-root -f Dockerfile-2.8-root .
   # test build 2.7
-  - docker build -t 2.7 -f Dockerfile-2.7
-  - docker build -t 2.7-root -f Dockerfile-2.7-root
+  - docker build -t 2.7 -f Dockerfile-2.7 .
+  - docker build -t 2.7-root -f Dockerfile-2.7-root .
   # run 2.9
   - docker run --rm 2.9 ansible --version
   - docker run --rm 2.9-root ansible --version
