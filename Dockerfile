@@ -6,7 +6,7 @@ ENV umask=022
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends python3 libc6-dev python3-pip gcc git python3-dev python3-setuptools python3-wheel libssl-dev openssh-client
-RUN pip3 install ansible==${ansible_version} molecule==${molecule_version} docker ansible-lint
+RUN pip3 install ansible==${ansible_version} molecule==${molecule_version} docker ansible-lint flake8
 # python-vagrant pywinrm
 RUN apt-get purge --autoremove -y libc6-dev gcc libssl-dev python3-dev python3-wheel && \
     apt-get clean && \
@@ -17,4 +17,5 @@ RUN groupadd -g 998 docker
 RUN useradd -m -s /bin/bash user && \
     gpasswd -a user docker
 USER user
+=======
 CMD ["bash"]
