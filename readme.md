@@ -15,6 +15,9 @@ The image has:
 
 I use this image to test molecule converge and test my ansible roles.
 
+There's no entrypoint set in the images, only CMD
+is set to bash.
+
 ## Tags
 
 The latest/$ANSIBLE_VERSION tag runs as [uid 1000 and is part of the docker group(gid 998.)](https://gitlab.com/richardskumat/dind-ansible-molecule/-/blob/master/Dockerfile).
