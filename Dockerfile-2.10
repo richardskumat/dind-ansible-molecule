@@ -2,7 +2,7 @@ FROM qwe1/debdocker
 # https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
 # pip3 can't find ansible 2.10, only ..a9 as highest
 ENV ansible_version=2.10.0a9
-ENV molecule_version=3.0.6
+ENV molecule_version=3.0.8
 ENV umask=022
 RUN apt-get update && \
     apt-get upgrade -y && \
