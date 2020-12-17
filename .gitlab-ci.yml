@@ -14,6 +14,7 @@ stages:
 
 before_script:
   - docker info
+  - export ANSIBLE_VERSION_210="$(grep ansible_version= Dockerfile-2.10 | awk -F'=' '{print $2}')"
   - export ANSIBLE_VERSION_29="$(grep ansible_version= Dockerfile | awk -F'=' '{print $2}')"
   - export ANSIBLE_VERSION_28="$(grep ansible_version= Dockerfile-2.8 | awk -F'=' '{print $2}')"
   - export ANSIBLE_VERSION_27="$(grep ansible_version= Dockerfile-2.7 | awk -F'=' '{print $2}')"
@@ -21,6 +22,8 @@ before_script:
 build:
   stage: build
   script:
+   # ans 2.10
+   - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.10 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 .
    # ans 2.9
    - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.9 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_29 .
    - docker build -f Dockerfile-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.9-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_29-root .
@@ -30,6 +33,9 @@ build:
    # ans 2.7
    - docker build -f Dockerfile-2.7 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 .
    - docker build -f Dockerfile-2.7-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root .
+   # test 2.10
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 ansible --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 molecule --version
    # test 2.9
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
@@ -54,6 +60,8 @@ push_to_dockerhub:
    - master
  script:
    - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
+   # ans 2.10
+   - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.10 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 .
    # ans 2.9
    - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.9 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_29 .
    - docker build -f Dockerfile-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.9-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_29-root .
@@ -64,6 +72,9 @@ push_to_dockerhub:
    - docker build -f Dockerfile-2.7 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27 -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7 .
    - docker build -f Dockerfile-2.7-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:2.7-root .
    - docker images
+   # test 2.10
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 ansible --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 molecule --version
    # test 2.9
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
@@ -81,6 +92,8 @@ push_to_dockerhub:
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_27-root molecule --version
    # summary
    - docker images
+   # push 2.10 image
+   - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210
    # push 2.9 image
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest
    - docker push $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_29
@@ -107,6 +120,9 @@ test_docker_images:
  only:
    - master
  script:
+   # test 2.10
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 ansible --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION_210 molecule --version
    # test 2.9
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
