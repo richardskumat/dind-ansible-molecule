@@ -2,6 +2,9 @@
 
 [![pipeline status](https://gitlab.com/richardskumat/dind-ansible-molecule/badges/master/pipeline.svg)](https://gitlab.com/richardskumat/dind-ansible-molecule/commits/master)
 
+I'm currently leaving 2.9.x as latest because I haven't personally
+upgraded or tested my own roles with ans2.10.
+
 Based on qwe1/debdocker, because:
 
 - I decided to build this image because I've had some python issues due to upstream
