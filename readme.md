@@ -2,8 +2,6 @@
 
 [![pipeline status](https://gitlab.com/richardskumat/dind-ansible-molecule/badges/master/pipeline.svg)](https://gitlab.com/richardskumat/dind-ansible-molecule/commits/master)
 
-I'm currently leaving 2.9.x as latest because I haven't personally
-upgraded or tested my own roles with ans2.10.
 
 Based on qwe1/debdocker, because:
 
@@ -14,7 +12,6 @@ on my Ansible roles.
 The image has:
 
 - docker, ansible and molecule installed
-- debian:10 container base
 
 I use this image to test molecule converge and test my ansible roles.
 
@@ -24,14 +21,6 @@ is set to bash.
 ## Tags
 
 The latest/$ANSIBLE_VERSION tag runs as [uid 1000 and is part of the docker group(gid 998.)](https://gitlab.com/richardskumat/dind-ansible-molecule/-/blob/master/Dockerfile).
-
-The latest points at ansible 2.9.x.
-
-There's a root/$ANSIBLE_VERSION-root tag that simply runs as the root user.
-
-The root tag points at ansible 2.9.x.
-
-There also tags for ansible 2.7 and 2.8, with basic user and root variants.
 
 ## Usage examples
 
