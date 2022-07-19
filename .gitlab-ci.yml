@@ -22,6 +22,10 @@ build:
    # ans
    - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION .
    - docker build -f Dockerfile-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION-root .
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root ansible --version
+   - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root molecule --version
 
 push_to_dockerhub:
  stage: push
