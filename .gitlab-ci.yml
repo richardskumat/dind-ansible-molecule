@@ -8,8 +8,6 @@ services:
     # entrypoint: ["env", "-u", "DOCKER_HOST"]
     # command: ["dockerd-entrypoint.sh"]
 
-
-
 variables:
   # for some reason docker on gitlab throws context errors with these enabled
   #DOCKER_HOST: tcp://docker:2376
@@ -50,8 +48,9 @@ build:
   stage: build
   script:
    # ans
-   - docker build -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION .
-   - docker build -f Dockerfile-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:$ANSIBLE_VERSION-root .
+   - docker buildx build --load -f Dockerfile -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest  --platform linux/amd64 .
+   - docker buildx build --load -f Dockerfile-root -t $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root  --platform linux/amd64 .
+   - docker images
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest ansible --version
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:latest molecule --version
    - docker run --rm $DOCKERHUB_USER/$DOCKERHUB_PROJECT:root ansible --version
