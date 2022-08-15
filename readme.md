@@ -2,7 +2,6 @@
 
 [![pipeline status](https://gitlab.com/richardskumat/dind-ansible-molecule/badges/master/pipeline.svg)](https://gitlab.com/richardskumat/dind-ansible-molecule/commits/master)
 
-
 Based on qwe1/debdocker, because:
 
 - I decided to build this image because I've had some python issues due to upstream
@@ -18,9 +17,19 @@ I use this image to test molecule converge and test my ansible roles.
 There's no entrypoint set in the images, only CMD
 is set to bash.
 
+## Disclaimer
+
+All my personal projects are that, personal, and should not be relied upon.
+
+I will change things at anytime and not keep old files, scripts or docker images around.
+
 ## Tags
 
 The latest/$ANSIBLE_VERSION tag runs as [uid 1000 and is part of the docker group(gid 998.)](https://gitlab.com/richardskumat/dind-ansible-molecule/-/blob/master/Dockerfile).
+
+There are also builds where the default user is root(uid 0).
+
+See the .gitlab-ci.yml file in the repo or [dockerhub page](https://hub.docker.com/r/qwe1/dind-ansible-molecule/tags) for actively built tags.
 
 ## Usage examples
 
