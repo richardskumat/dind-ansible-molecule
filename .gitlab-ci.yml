@@ -37,6 +37,7 @@ before_script:
   - docker buildx inspect --bootstrap whatever
   - docker buildx ls
   - export ANSIBLE_VERSION="$(grep ansible_version= Dockerfile | awk -F'=' '{print $2}')"
+  - export ANSIBLE_VERSION="$(grep ansible_major_version= Dockerfile | awk -F'=' '{print $2}')"
   - echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USER" --password-stdin
 
 stages:

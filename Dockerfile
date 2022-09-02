@@ -1,6 +1,7 @@
 FROM qwe1/debdocker:20.10
 # https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
 ENV ansible_version=2.13.3
+ENV ansible_major_version=2.13
 ENV molecule_version=3.6.1
 ENV umask=022
 #ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
