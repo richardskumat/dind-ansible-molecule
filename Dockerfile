@@ -1,4 +1,4 @@
-FROM qwe1/debdocker:20.10
+FROM qwe1/debdocker:23.0
 # https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
 ENV ansible_version=2.13.7
 ENV ansible_major_version=2.13
