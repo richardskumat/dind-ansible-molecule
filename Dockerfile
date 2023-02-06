@@ -2,6 +2,7 @@ FROM qwe1/debdocker:23.0
 # https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
 ENV ansible_version=2.14.2
 ENV ansible_major_version=2.14
+ENV ansible_commv=7.2.0
 ENV molecule_version=4.0.4
 ENV umask=022
 #ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
@@ -9,7 +10,7 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends python3 libc6-dev python3-pip gcc git python3-dev python3-setuptools python3-wheel libssl-dev openssh-client
 RUN pip3 install --upgrade pip
-RUN pip3 install ansible==${ansible_version} molecule==${molecule_version} molecule-docker docker ansible-lint flake8 yamllint
+RUN pip3 install ansible==${ansible_commv} molecule==${molecule_version} molecule-docker docker ansible-lint flake8 yamllint
 # python-vagrant pywinrm
 RUN apt-get purge --autoremove -y libc6-dev gcc libssl-dev python3-dev python3-wheel && \
     apt-get clean && \
