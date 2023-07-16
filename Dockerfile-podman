@@ -15,13 +15,20 @@ ENV PIP_BREAK_SYSTEM_PACKAGES=1
 # This can be overriden by passing the --break-system-packages option to pip
 RUN rm -f /usr/lib/python3.11/EXTERNALLY-MANAGED && \
     pip3 install --upgrade pip
-RUN pip3 install --disable-pip-version-check --break-system-packages ansible==${ansible_commv} ansible-core==${ansible_version} molecule==${molecule_version} molecule-docker docker ansible-lint flake8 yamllint
+RUN pip3 install --disable-pip-version-check --break-system-packages ansible==${ansible_commv} ansible-core==${ansible_version} molecule==${molecule_version} molecule-plugins[docker] docker ansible-lint flake8 yamllint podman molecule-plugins[podman]
 # python-vagrant pywinrm
 RUN apt-get purge --autoremove -y libc6-dev gcc libssl-dev python3-dev python3-wheel && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache
+# note -g 998 might work on a debian host(that's where I run it)
+# but might break on RHEL systems
+RUN groupadd -g 998 docker
+RUN useradd -m -s /bin/bash user && \
+    gpasswd -a user docker
+USER user
 # add community.docker:>=3.0.2 + ansible-galaxy collection install -vvv ansible.posix:>=1.4.0
 RUN mkdir -p ~/.ansible/collections && \
     ansible-galaxy collection install -vvv community.docker -p ~/.ansible/collections && \
+    ansible-galaxy collection install -vvv containers.podman -p ~/.ansible/collections && \
     ansible-galaxy collection install -vvv ansible.posix -p ~/.ansible/collections
 CMD ["bash"]
