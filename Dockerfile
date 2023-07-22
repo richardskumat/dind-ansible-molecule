@@ -4,9 +4,9 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends python3 libc6-dev python3-pip gcc git python3-dev python3-setuptools python3-wheel libssl-dev openssh-client
 # https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
-ENV ansible_version=2.15.1
+ENV ansible_version=2.15.2
 ENV ansible_major_version=2.15
-ENV ansible_commv=8.1.0
+ENV ansible_commv=8.2.0
 ENV molecule_version=5.1.0
 ENV umask=022
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
