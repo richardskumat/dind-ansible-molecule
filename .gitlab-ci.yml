@@ -1,6 +1,6 @@
 ---
-#image: qwe1/debdocker:23.0
-image: crazymax/docker:latest
+image: qwe1/debdocker:24.0
+#image: crazymax/docker:latest
 services:
   - name: docker:24.0-dind
     command: ["--experimental"]
